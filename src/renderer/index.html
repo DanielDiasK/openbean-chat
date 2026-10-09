@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>OpenBean</title>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://www.google.com https://icons.duckduckgo.com"
+    />
+    <link href="./assets/main.css" type="text/css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div id="app">
+      <aside id="sidebar">
+        <div class="sidebar-head">
+          <div class="brand">
+            <span class="brand-icon"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><ellipse cx="8" cy="8" rx="4.4" ry="6.2" transform="rotate(20 8 8)"/><path d="M8.8 2.4C6.6 4.8 9.9 6.5 8.5 8.5 7.1 10.5 7.8 12.3 7.1 14" stroke-linecap="round"/></svg></span>
+            <span class="brand-name">OpenBean</span>
+          </div>
+          <button id="sidebar-toggle" class="ghost-btn" title="Recolher">|◫</button>
+        </div>
+        <button id="new-chat" class="new-thread-btn" title="Nova conversa">
+          <span class="plus">+</span><span>New thread</span>
+        </button>
+        <div class="search-wrap">
+          <input id="search" type="text" placeholder="Buscar" autocomplete="off" />
+        </div>
+        <div id="history" class="history"></div>
+        <div class="sidebar-footer">
+          <div class="user-card" id="user-card" title="Editar perfil">
+            <span class="user-avatar" id="user-avatar">V</span>
+            <span class="user-name" id="user-name">Você</span>
+          </div>
+        </div>
+      </aside>
+
+      <main id="main">
+        <header id="topbar">
+          <div class="top-left">
+            <span id="topbar-title">New chat</span>
+          </div>
+          <div class="top-right">
+            <div id="backend-status" class="backend-status top">
+              <span id="status-dot" class="status-dot"></span>
+              <span id="status-text">Conectando…</span>
+              <button id="status-retry" class="retry-btn" title="Tentar de novo">↻</button>
+            </div>
+            <button class="ghost-btn" title="Opções">···</button>
+            <div class="win-controls">
+              <button id="win-min" class="win-btn" title="Minimizar">—</button>
+              <button id="win-max" class="win-btn" title="Maximizar">☐</button>
+              <button id="win-close" class="win-btn close" title="Fechar">✕</button>
+            </div>
+          </div>
+        </header>
+
+        <div id="chat-scroll">
+          <div id="empty-state" class="empty-state">
+            <h1 id="welcome-title">Como posso ajudar?</h1>
+          </div>
+          <div id="chat" class="chat"></div>
+        </div>
+
+        <footer id="composer-wrap">
+          <div class="composer-col">
+            <div id="composer">
+              <div id="attach-chips" class="attach-chips"></div>
+              <textarea id="input" rows="1" placeholder="Send a message..."></textarea>
+              <div class="composer-bar">
+                <div class="bar-left">
+                  <button id="btn-attach" class="icon-btn" title="Adicionar">
+                    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M8 2v12M2 8h12"/></svg>
+                  </button>
+                  <button id="btn-search" class="search-pill" title="Pesquisar na internet">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4M8 1.8c-3.6 3.6-3.6 8.8 0 12.4M8 1.8c3.6 3.6 3.6 8.8 0 12.4"/></svg>
+                    <span>Pesquisa</span>
+                  </button>
+                  <button id="btn-model" class="model-pill" title="Escolher modelo e nível">
+                    <span class="provider-icon"><svg width="14" height="14" viewBox="0 6 24 30" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M24 36H0V6H24V36ZM18 30H6V12H18V30Z" fill="currentColor"/></svg></span>
+                    <span id="model-label">Carregando…</span>
+                    <span id="variant-label" class="variant-tag">—</span>
+                    <span class="chev">▾</span>
+                  </button>
+                </div>
+                <div class="bar-right">
+                  <button id="send" class="send-btn" title="Enviar">↑</button>
+                </div>
+              </div>
+
+              <div id="attach-menu" class="popup hidden">
+                <button class="popup-item" data-attach="search">
+                  <span class="popup-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4M8 1.8c-3.6 3.6-3.6 8.8 0 12.4M8 1.8c3.6 3.6 3.6 8.8 0 12.4"/></svg></span><span>Pesquisar na internet</span>
+                </button>
+                <button class="popup-item" data-attach="image">
+                  <span class="popup-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="1.5" y="2.5" width="13" height="11" rx="2"/><circle cx="5.5" cy="6.5" r="1.3"/><path d="M2.5 12.5l3.5-3.5 2.5 2.5 2-2 3 3"/></svg></span><span>Adicionar fotos ou vídeos</span>
+                </button>
+                <button class="popup-item" data-attach="file">
+                  <span class="popup-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3.5 1.5h5.5l3.5 3.5v9.5h-9z"/><path d="M9 1.5V5h3.5M6 8h4M6 10.5h4"/></svg></span><span>Adicionar arquivos (docs, PDF…)</span>
+                </button>
+                <button class="popup-item" data-attach="context">
+                  <span class="popup-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M2.5 4h11M2.5 8h11M2.5 12h7"/></svg></span><span>Colar contexto como texto</span>
+                </button>
+              </div>
+
+              <div id="model-menu" class="popup hidden">
+                <div class="popup-head">
+                  <span>Modelo (OpenCode local)</span>
+                  <button id="model-reload" class="retry-btn" title="Recarregar">↻</button>
+                </div>
+                <div id="model-list" class="model-list"></div>
+                <div id="thinking-foot" class="thinking-foot hidden">
+                  <span class="thinking-label">Thinking</span>
+                  <div id="thinking-row" class="thinking-row"></div>
+                </div>
+              </div>
+            </div>
+            <div id="suggestions-row" class="suggestions">
+              <button class="suggestion" data-prompt="Explique de forma simples o que é inteligência artificial.">Explicar IA</button>
+              <button class="suggestion" data-prompt="Escreva uma função em TypeScript que formata uma data em pt-BR.">Função de data em TS</button>
+              <button class="suggestion" data-prompt="Crie um plano de estudos de 7 dias para aprender Electron.">Plano Electron 7 dias</button>
+              <button class="suggestion" data-prompt="Revise este código e sugira melhorias: ">Revisar código</button>
+            </div>
+            <input id="file-input" type="file" multiple class="hidden" />
+          </div>
+        </footer>
+      </main>
+    </div>
+
+    <div id="setup-overlay" class="overlay hidden">
+      <div class="setup-card">
+        <div class="setup-logo"><svg width="34" height="34" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><ellipse cx="8" cy="8" rx="4.4" ry="6.2" transform="rotate(20 8 8)"/><path d="M8.8 2.4C6.6 4.8 9.9 6.5 8.5 8.5 7.1 10.5 7.8 12.3 7.1 14" stroke-linecap="round"/></svg></div>
+        <h2 id="setup-title">Bem-vindo ao OpenBean</h2>
+        <p class="setup-sub">Configure rapidinho pra começar.</p>
+        <label class="setup-field">
+          <span>Seu nome</span>
+          <input id="setup-name" type="text" placeholder="Como posso te chamar?" maxlength="60" autocomplete="off" />
+        </label>
+        <label class="setup-field">
+          <span>Pasta dos chats</span>
+          <div class="folder-row">
+            <span id="setup-folder" class="folder-path">…</span>
+            <button id="setup-pick" class="inline-retry" type="button">Escolher</button>
+          </div>
+        </label>
+        <div id="setup-error" class="setup-error hidden"></div>
+        <button id="setup-save" class="setup-save" type="button">Começar →</button>
+        <div id="setup-version" class="setup-ver">OpenBean</div>
+      </div>
+    </div>
+
+    <script type="module" src="./src/renderer.ts"></script>
+  </body>
+</html>
